@@ -1,3 +1,5 @@
+package Others;
+
 public interface Descuento {
 
     // STRATEGY

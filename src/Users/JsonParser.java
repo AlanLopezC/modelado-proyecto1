@@ -1,3 +1,4 @@
+package Users;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,13 +9,13 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 
-public class Ejemplo {
+public class JsonParser {
     public static <JSONObject> void main(String[] args) throws IOException {
 
         String json = "";
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/users.json"));
+            BufferedReader br = new BufferedReader(new FileReader("src/Users/users.json"));
 
             String linea;
             while ((linea = br.readLine()) != null) {

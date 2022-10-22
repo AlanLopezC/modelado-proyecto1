@@ -1,4 +1,9 @@
+package Pruductos;
+
 import java.util.Map;
+
+import Others.Descuento;
+
 import java.util.HashMap;
 
 public abstract class Producto implements Descuento {
@@ -21,7 +26,7 @@ public abstract class Producto implements Descuento {
     // PROPIEDADES
     private Map<String, Object> propiedades;
 
-    public Producto(String nombreIn, String barcodeIn, String departamentoIn, double precioIn, String descriptionIn){
+    public Producto(String nombreIn, String barcodeIn, String departamentoIn, double precioIn, String descriptionIn) {
 
         nombre = nombreIn;
         barcode = barcodeIn;
@@ -54,7 +59,6 @@ public abstract class Producto implements Descuento {
         return description;
     }
 
-
     public String getPropiedades() {
 
         StringBuilder propiedadesTexto = new StringBuilder();
@@ -76,13 +80,13 @@ public abstract class Producto implements Descuento {
     }
 
     // AGREGAR PROPIEDADES
-    public void agregarPropiedad(String propiedad, Object value){
+    public void agregarPropiedad(String propiedad, Object value) {
         propiedades.put(propiedad, value);
     }
 
     // TO STRING
     @Override
-    public String toString(){
+    public String toString() {
         return nombre + " : $" + precio + "\n\nDescripción:\n" + description + "\n\nPropiedades:" + getPropiedades();
     }
 

@@ -1,3 +1,5 @@
+package Pruductos;
+
 public class Smartphone extends Producto {
 
     public Smartphone(String nombreIn, String barcodeIn, String departamentoIn, double precioIn, String descriptionIn) {
@@ -6,11 +8,11 @@ public class Smartphone extends Producto {
 
     @Override
     public String mostrarDescuento() {
-        return "Hay un descuento del 40%, el producto vale " + (getPrecio()-(getPrecio() * 0.40));
+        return "Hay un descuento del 40%, el producto vale " + (getPrecio() - (getPrecio() * 0.40));
     }
 
     @Override
     public void hacerDescuento() {
-        setPrecio(getPrecio()-(getPrecio() * 0.40));
+        setPrecio(getPrecio() - (getPrecio() * 0.40));
     }
 }
