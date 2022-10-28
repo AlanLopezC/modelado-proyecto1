@@ -4,12 +4,10 @@ import java.util.*;
 import java.io.Serializable;
 
 public class Catalogo implements Serializable, CatalogoServer{
-    private ArrayList<Producto> departamento1 = new ArrayList<Producto>();
-    private ArrayList<Producto> departamento2 = new ArrayList<Producto>();
-    private ArrayList<ArrayList> departamentos = new ArrayList<ArrayList>();
+    private Productos catalogo;
 
     public Catalogo(){
-        Smartphone iPhone = new Smartphone("Iphone 3", "12345", "Celulares", 7999.00,
+        Producto iPhone = new Smartphone("Iphone 3", "12345", "Celulares", 7999.00,
                 "- El producto tendrá una batería que supere el 80 % de capacidad en comparación con uno totalmente nuevo.\n"
                         +
                         "- Es posible que los accesorios que vengan con el producto no sean originales, pero serán compatibles y totalmente funcionales.\n"
@@ -25,7 +23,7 @@ public class Catalogo implements Serializable, CatalogoServer{
         iPhone.agregarPropiedad("Procesador", "A15");
         iPhone.agregarPropiedad("Seguridad", "Face ID");
 
-        Smartphone samsung = new Smartphone("Samsung", "4353", "Electronica", 1000.00,
+        Producto samsung = new Smartphone("Samsung", "4353", "Electronica", 1000.00,
                 "- El producto está reacondicionado, es totalmente funcional y está en excelentes condiciones. Respaldado por la garantía de 90 días de Amazon Renewed.\n"
                         +
                         "- Los proveedores cualificados de Amazon han inspeccionado, probado y limpiado profesionalmente este producto usado.\n"
@@ -40,32 +38,45 @@ public class Catalogo implements Serializable, CatalogoServer{
         samsung.agregarPropiedad("Procesador", "Snapdragon");
         samsung.agregarPropiedad("Seguridad", "Lector de Huellas");
 
-        Fruta manzana = new Fruta("Manzana", "4425566", "Alimentos", 10, "- Traído de las granjas.");
+        Producto manzana = new Fruta("Manzana", "1425566", "Alimentos", 10, "- Traído de las granjas.");
         manzana.agregarPropiedad("Color", "Rojo");
         manzana.agregarPropiedad("Tiene gusanos", false);
-
-        departamento1.add(manzana);
-        departamento2.add(iPhone);
-        departamento2.add(samsung);
-        departamentos.add(departamento1);
-        departamentos.add(departamento2);
+        
+        ArrayList<Productos> frutas = new ArrayList<Productos>();
+        ArrayList<Productos> smarts = new ArrayList<Productos>();
+        ArrayList<Productos> allDeparments = new ArrayList<Productos>();
+        Productos departamentoFrutas = new ProductosDepartamento(frutas, "Frutas","1");
+        Productos departamentoSmart = new ProductosDepartamento(smarts, "Tecnología","1");
+        Productos catalogo = new ProductosDepartamento(allDeparments, "Catálogo","1");
+        departamentoFrutas.add(manzana);
+        departamentoSmart.add(iPhone);
+        departamentoSmart.add(samsung);
+        catalogo.add(departamentoFrutas);
+        catalogo.add(departamentoSmart);
+        this.catalogo = catalogo;
         
 
     }
     public void mostrarCatalogo(){ 
-        for(int i = 0; i< departamentos.size();i++){
-            Producto productoD = (Producto) departamentos.get(i).get(0);
-            
-            System.out.println("***** Departamento de "+ productoD.getDepartamento() +  "******");
-                for(int j = 0 ; j < departamentos.get(i).size();j++){
-                    System.out.println(j+".-"+ departamentos.get(i).get(j));
-                }
-          
-        } 
+        catalogo.printDatos(); 
     }
-   /* public void mostrarCatalogo(){
-        System.out.println("Hay un problema");
-    }*/
+
+    public Productos getProducto(String bc){
+        Iterator it = catalogo.crearIterador();
+        while(it.hasNext()){
+            Productos producto = (Productos)it.next();
+            if(producto.getBarcode().equals(bc)){
+                return producto;
+            }
+        }
+        return null;
+    }
+    public static void main(String[] args){
+        Catalogo catprueba = new Catalogo();
+        //catprueba.mostrarCatalogo();
+        System.out.println(catprueba.getProducto("4353"));
+    }
+
 
    
 }

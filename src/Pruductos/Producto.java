@@ -1,13 +1,13 @@
 package Pruductos;
 
 import java.util.Map;
-
+import java.util.Iterator;
 import Others.Descuento;
-
+import Catalogo.*;
 import java.util.HashMap;
 import java.io.Serializable;
 
-public abstract class Producto implements Descuento, Serializable {
+public abstract class Producto extends Productos implements Descuento, Serializable {
 
     // NOMBRE
     private final String nombre;
@@ -91,4 +91,12 @@ public abstract class Producto implements Descuento, Serializable {
         return nombre + " : $" + precio + "\n\nDescripción:\n" + description + "\n\nPropiedades:" + getPropiedades();
     }
 
+    @Override
+    public void printDatos(){
+        System.out.println("\n"+this.toString());
+    }
+    
+    public Iterator crearIterador(){
+        return new NullIterador();
+    }
 }
