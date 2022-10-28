@@ -5,8 +5,9 @@ import java.util.Map;
 import Others.Descuento;
 
 import java.util.HashMap;
+import java.io.Serializable;
 
-public abstract class Producto implements Descuento {
+public abstract class Producto implements Descuento, Serializable {
 
     // NOMBRE
     private final String nombre;

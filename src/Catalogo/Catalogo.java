@@ -1,17 +1,14 @@
-package Others;
+package Catalogo;
+import Pruductos.*;
+import java.util.*;
+import java.io.Serializable;
 
-import Carrito.Carrito;
-import Carrito.CarritoBuilder;
-import Pruductos.Fruta;
-import Pruductos.Smartphone;
-import Catalogo.*;
+public class Catalogo implements Serializable, CatalogoServer{
+    private ArrayList<Producto> departamento1 = new ArrayList<Producto>();
+    private ArrayList<Producto> departamento2 = new ArrayList<Producto>();
+    private ArrayList<ArrayList> departamentos = new ArrayList<ArrayList>();
 
-public class Prueba {
-    public static void main(String[] args) {
-
-        // *************************************************************************************
-        // ? Ejemplo de crear Producto
-
+    public Catalogo(){
         Smartphone iPhone = new Smartphone("Iphone 3", "12345", "Celulares", 7999.00,
                 "- El producto tendrá una batería que supere el 80 % de capacidad en comparación con uno totalmente nuevo.\n"
                         +
@@ -47,21 +44,29 @@ public class Prueba {
         manzana.agregarPropiedad("Color", "Rojo");
         manzana.agregarPropiedad("Tiene gusanos", false);
 
-        // *************************************************************************************
-        // ? Ejemplo de crear Carrito
-
-        //CarritoBuilder carritoBuilder = new CarritoBuilder();
-        //carritoBuilder.addProduct(iPhone);
-        //carritoBuilder.addProduct(samsung);
-        //carritoBuilder.addProduct(manzana);
-
-        // * Cuando termine
-        //Carrito carrito = carritoBuilder.build();
-        System.out.println("  Hola");
-        //System.out.print(carrito.obtenerCarrito());
-        Catalogo cat = new Catalogo();
-        cat.mostrarCatalogo();
+        departamento1.add(manzana);
+        departamento2.add(iPhone);
+        departamento2.add(samsung);
+        departamentos.add(departamento1);
+        departamentos.add(departamento2);
+        
 
     }
+    public void mostrarCatalogo(){ 
+        for(int i = 0; i< departamentos.size();i++){
+            Producto productoD = (Producto) departamentos.get(i).get(0);
+            
+            System.out.println("***** Departamento de "+ productoD.getDepartamento() +  "******");
+                for(int j = 0 ; j < departamentos.get(i).size();j++){
+                    System.out.println(j+".-"+ departamentos.get(i).get(j));
+                }
+          
+        } 
+    }
+   /* public void mostrarCatalogo(){
+        System.out.println("Hay un problema");
+    }*/
 
+   
 }
+ 
