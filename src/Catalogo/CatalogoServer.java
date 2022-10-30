@@ -1,6 +1,4 @@
 package Catalogo;
-import Pruductos.*;
-import java.util.*;
 
 public interface CatalogoServer{
    

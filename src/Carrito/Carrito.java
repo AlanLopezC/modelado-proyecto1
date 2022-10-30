@@ -1,6 +1,6 @@
 package Carrito;
 
-import Pruductos.Producto;
+import Productos.Producto;
 
 import java.util.LinkedList;
 

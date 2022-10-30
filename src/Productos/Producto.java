@@ -1,4 +1,4 @@
-package Pruductos;
+package Productos;
 
 import java.util.Map;
 import java.util.Iterator;
@@ -88,7 +88,7 @@ public abstract class Producto extends Productos implements Descuento, Serializa
     // TO STRING
     @Override
     public String toString() {
-        return nombre + " : $" + precio + "\n\nDescripción:\n" + description + "\n\nPropiedades:" + getPropiedades();
+        return nombre + " : $" + precio + "- BarCode: " + barcode + "\n\nDescripción:\n" + description + "\n\nPropiedades:" + getPropiedades();
     }
 
     @Override

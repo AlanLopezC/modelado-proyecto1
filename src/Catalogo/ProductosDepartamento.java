@@ -1,6 +1,7 @@
 package Catalogo;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 public class ProductosDepartamento extends Productos{
     private ArrayList<Productos> productos = new ArrayList<Productos>();
     private String nombre;

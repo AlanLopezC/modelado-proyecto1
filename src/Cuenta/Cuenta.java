@@ -7,6 +7,8 @@ public class Cuenta implements Serializable, InterfaceCuenta{
     private double saldoInicial;
     private String usuario;
     private double saldoActual;
+
+
     public Cuenta(int cvv,String usuario, double saldo){
         this.cvv = cvv;
         saldoInicial = saldo;

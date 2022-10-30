@@ -1,5 +1,5 @@
 package Catalogo;
-import Pruductos.*;
+import Productos.*;
 import java.util.*;
 import java.io.Serializable;
 

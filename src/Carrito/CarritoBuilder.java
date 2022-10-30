@@ -1,6 +1,6 @@
 package Carrito;
 
-import Pruductos.Producto;
+import Productos.Producto;
 
 public class CarritoBuilder extends Builder {
 
@@ -17,7 +17,7 @@ public class CarritoBuilder extends Builder {
     /**
      * Agrega un componente a la lista de componentes.
      * 
-     * @param component Componente que se desea agregar.
+     * @param product Componente que se desea agregar.
      * @return Builder Se regresa el constructor.
      */
     @Override

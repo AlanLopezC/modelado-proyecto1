@@ -1,9 +1,7 @@
 package Others;
 
-import Carrito.Carrito;
-import Carrito.CarritoBuilder;
-import Pruductos.Fruta;
-import Pruductos.Smartphone;
+import Productos.Fruta;
+import Productos.Smartphone;
 import Catalogo.*;
 
 public class Prueba {

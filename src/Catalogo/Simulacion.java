@@ -1,7 +1,7 @@
 package Catalogo;
 import java.net.*;
 import java.io.*;
-import Pruductos.*;
+
 import Remote.Remote;
 public class Simulacion{
 	

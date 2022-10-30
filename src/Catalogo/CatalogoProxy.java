@@ -11,5 +11,8 @@ public class CatalogoProxy implements Serializable, CatalogoServer{
         CatalogoReal.mostrarCatalogo();
     }
 
+    public Productos getProducto(String br){
+        return CatalogoReal.getProducto(br);
+    }
 
 }

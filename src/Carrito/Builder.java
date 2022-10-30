@@ -2,7 +2,7 @@ package Carrito;
 
 import java.util.LinkedList;
 
-import Pruductos.Producto;
+import Productos.Producto;
 
 /**
  * Patrón de Diseño Builder
