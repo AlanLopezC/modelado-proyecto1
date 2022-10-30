@@ -5,7 +5,7 @@ import java.io.*;
 import java.io.Serializable;
 
 /*
-* Clase que modela el comportamiento de paso de mensajes remotos.
+* Clase que modela el comportamiento de paso de objetos de manera remota.
 */
 public class Remote<T extends Serializable> {
     

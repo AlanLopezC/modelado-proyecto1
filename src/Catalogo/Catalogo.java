@@ -2,10 +2,17 @@ package Catalogo;
 import Pruductos.*;
 import java.util.*;
 import java.io.Serializable;
-
+/**
+* Clase que simula el catálogo de la tienda virtual.
+ **/
 public class Catalogo implements Serializable, CatalogoServer{
+    /*
+    atributo en el cual se agregará el catálogo con los departamentos y sus correspondientes artículos.
+    */
     private Productos catalogo;
-
+    /** 
+    * Constructor de la clase.
+    **/
     public Catalogo(){
         Producto iPhone = new Smartphone("Iphone 3", "12345", "Celulares", 7999.00,
                 "- El producto tendrá una batería que supere el 80 % de capacidad en comparación con uno totalmente nuevo.\n"
@@ -57,10 +64,17 @@ public class Catalogo implements Serializable, CatalogoServer{
         
 
     }
+    /*
+    * Método que imprime el catálogo. 
+    */
     public void mostrarCatalogo(){ 
         catalogo.printDatos(); 
     }
-
+    /**
+    * Método que devuelve un producto dado un código de barras.
+    * @return Productos 
+    * @param bc Código de barras del producto a elegir. 
+    **/
     public Productos getProducto(String bc){
         Iterator it = catalogo.crearIterador();
         while(it.hasNext()){
