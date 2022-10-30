@@ -20,13 +20,11 @@ public class Cuenta implements Serializable, InterfaceCuenta{
 
     private double saldoActual;
 
-<<<<<<< HEAD
 
-=======
     /** 
     *Método constructor de la clase
     **/
->>>>>>> ce22321548e7e5b9abfb347b5f7b4436534c7158
+
     public Cuenta(int cvv,String usuario, double saldo){
         this.cvv = cvv;
         saldoInicial = saldo;

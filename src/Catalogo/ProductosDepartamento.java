@@ -1,13 +1,11 @@
 package Catalogo;
 import java.util.ArrayList;
 import java.util.Iterator;
-<<<<<<< HEAD
 
-=======
 /** 
 * Clase que simula el comportamiento de un departamento de productos. 
 **/
->>>>>>> ce22321548e7e5b9abfb347b5f7b4436534c7158
+
 public class ProductosDepartamento extends Productos{
     /*
     * Lista de productos del departamento.
