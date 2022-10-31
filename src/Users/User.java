@@ -10,10 +10,16 @@ public class User {
     private String bankAccount;
     private String country;
 
-    public User(String name, int age, String phone) {
+    public User(String name, String username, String password, String adress, int age, String phone, String bankAccount,
+            String country) {
         this.name = name;
+        this.username = username;
+        this.password = password;
+        this.adress = adress;
         this.age = age;
         this.phone = phone;
+        this.bankAccount = bankAccount;
+        this.country = country;
     }
 
     public String getName() {
