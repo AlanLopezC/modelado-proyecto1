@@ -31,7 +31,7 @@ public class LatinSpanishStore implements Tienda {
 
     @Override
     public String mostrarMenu() {
-        return "\u250c---------------------------------\u2510".replace('-', '\u2500') + "\n" +
+        return "\n\u250c---------------------------------\u2510".replace('-', '\u2500') + "\n" +
                 "\u2502 1.- Ver Catálogo                \u2502\n" +
                 "\u2502 2.- Hacer una compra.           \u2502\n" +
                 "\u2502 3.- Cerrar Sesión.              \u2502\n" +
@@ -71,8 +71,7 @@ public class LatinSpanishStore implements Tienda {
                     TiendaFacade.clearConsole();
                     return;
                 }
-                case "f": compraSegura(carritoBuilder.build(), user);
-                break;
+                case "f": compraSegura(carritoBuilder.build(), user); return;
                 default:
 
                     try {
@@ -88,11 +87,12 @@ public class LatinSpanishStore implements Tienda {
                                     "\u2502        El Producto No Existe.    \u2502\n" +
                                     "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
                             TiendaFacade.clearConsole();
+                            remote.close();
                             continue;
                         }
                         TiendaFacade.clearConsole();
                         TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
-                                "   Haz agregado a tu carrito el producto "   + producto.getNombre() +
+                                "   Has agregado a tu carrito el producto "   + producto.getNombre() +
                                 "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
                         TiendaFacade.clearConsole();
                         carritoBuilder.addProduct(producto);
@@ -126,33 +126,88 @@ public class LatinSpanishStore implements Tienda {
 
             CuentaProxy cuentaBancariaProxy = (CuentaProxy) remote.receive();
 
-            System.out.println("***OBTENIDO CUENTA ...***");
+            TiendaFacade.clearConsole();
+            System.out.print("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                             "\u2502     INICIANDO COMPRA SEGURA.     \u2502\n" +
+                             "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
 
             System.out.print("Ingresa tu cuenta bancaría: ");
             String cuentaBancaria = scanner.nextLine().strip();
+
+            // NO COINCIDE.
             if (!cuentaBancaria.equals(user.getBankAccount())){
-                System.out.print("El número de cuenta Bancaria no coincide.");
-                return;
-            }
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502     EL NÚMERO DE CUENTA NO COINCIDE.     \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
 
-
-            Double cargo = cuentaBancariaProxy.retirar(carritoIn.costoTotal());
-
-            if (cargo == 0){
-                System.out.print("Compra cancelada.");
+                remote.send(cuentaBancariaProxy);
                 remote.close();
                 return;
             }
 
-            System.out.print("\nTu carrito:\n" + carritoIn.obtenerCarrito());
-            System.out.print("La compra llegará el 10/30/2022");
-            remote.send(cuentaBancariaProxy);
+            // RETIRANDO FONDOS.
+            Double cargo = cuentaBancariaProxy.retirar(carritoIn.costoTotal());
+
+            if (carritoIn.costoTotal() == 0){
+
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                        "         No tienes nada en tú catálogo. Vuelve a intentarlo :( " +
+                        "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502      COMPRA CANCELADA.           \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+
+                remote.send(cuentaBancariaProxy);
+                remote.close();
+                return;
+
+            }
+
+            if (cargo == 0){
+
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                                            "         No tienes el suficiente dinero :( " +
+                                            "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502      COMPRA CANCELADA.           \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+
+                remote.send(cuentaBancariaProxy);
+                remote.close();
+                return;
+            }
+
+            System.out.print("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                            "\u2502      COMPRA ACEPTADA.           \u2502\n" +
+                            "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+            System.out.print(   "\n----------------------------------------".replace('-', '\u2500') + "\n" +
+                                "   TÚ CARRITO: " +
+                                "\n----------------------------------------".replace('-', '\u2500') + "\n");
+            System.out.print(carritoIn.obtenerCarrito());
+            System.out.print(   "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                                "       La compra llegará el 10/30/2022"  +
+                                "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+            TiendaFacade.sleepFor("");
+            TiendaFacade.clearConsole();
+
+            remote.send(cuentaBancariaProxy); // ACTUALIZANDO LA CUENTA BANCARIA.
             remote.close();
         }
         catch (IOException e){
-            System.out.print(e);
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                    "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                    "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
         }
-
     }
 
 
@@ -167,7 +222,7 @@ public class LatinSpanishStore implements Tienda {
     }
 
     @Override
-    public void mostrarOferta(CatalogoProxy catalogoProxy){
+    public void mostrarOferta(){
 
     }
 

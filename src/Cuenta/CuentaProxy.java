@@ -45,7 +45,6 @@ public class CuentaProxy implements Serializable, InterfaceCuenta{
             
             return monto;
         }else {
-            System.out.println("No tienes el suficiente dinero :(");
             return 0;
         }
     }

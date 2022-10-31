@@ -4,7 +4,7 @@ import Productos.Producto;
 
 import java.util.LinkedList;
 
-public class Carrito {
+public class  Carrito {
 
     private LinkedList<Producto> productos;
 

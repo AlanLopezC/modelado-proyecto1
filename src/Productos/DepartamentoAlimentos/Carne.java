@@ -10,13 +10,4 @@ public class Carne extends Producto implements Serializable {
         super(nombreIn, barcodeIn, departamentoIn, precioIn, descriptionIn);
     }
 
-    @Override
-    public String mostrarDescuento() {
-        return null;
-    }
-
-    @Override
-    public void hacerDescuento() {
-
-    }
 }

@@ -7,7 +7,7 @@ import Catalogo.*;
 import java.util.HashMap;
 import java.io.Serializable;
 
-public abstract class Producto extends Productos implements Descuento, Serializable {
+public abstract class Producto extends Productos implements Serializable {
 
     // NOMBRE
     private final String nombre;

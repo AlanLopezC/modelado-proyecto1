@@ -1,6 +1,7 @@
 package Catalogo;
+
 import java.util.*;
-public abstract class Productos{
+public abstract class Productos {
     
     /** 
     * Método que imprime la información (los datos) del departamento.

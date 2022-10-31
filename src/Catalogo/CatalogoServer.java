@@ -11,4 +11,6 @@ public interface CatalogoServer{
     * Método que nos muestra el catálogo del servidor de la tienda. 
     **/
    public abstract void mostrarCatalogo();
+
+   public void hacerDescuento(String barcode, double descount);
 }

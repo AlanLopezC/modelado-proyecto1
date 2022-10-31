@@ -1,26 +1,19 @@
 package TiendaFacade;
 
-import Cuenta.CuentaProxy;
 import Tienda.DoesNotPassValidation;
 import Tienda.Tienda;
 import Tienda.LatinSpanishStore;
 import Tienda.EnglishStore;
 import Tienda.SpanishStore;
 import Users.Users;
-import Catalogo.CatalogoProxy;
-import Remote.Remote;
 import Users.User;
 
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.*;
 
 
 public class TiendaFacade {
-
-    private CatalogoProxy catalogoProxy;
 
     private Map<String, User> baseDatosUsuarios = new HashMap<>();
 
@@ -82,57 +75,6 @@ public class TiendaFacade {
         Users users = new Users();
         for (User user: users.getUsers()){
             baseDatosUsuarios.put(user.getUsername(), user);
-        }
-    }
-
-    public void prenderServidorCuentas(){
-
-        while (true){
-            try{
-                Socket socket = new Socket("localhost", 5454);
-                Remote remote = new Remote(socket);
-
-                CuentaProxy cuentaProxy = (CuentaProxy)remote.receive();
-                if (cuentaProxy != null){
-                    remote.close();
-                    break;
-                }
-
-
-            }catch (IOException e){
-                TiendaFacade.clearConsole();
-                TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                        "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
-                        "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
-                TiendaFacade.clearConsole();
-            }
-        }
-
-    }
-
-    public void prenderServidorCatalogo(){
-
-        boolean prendioServidor = false;
-
-        while (!prendioServidor){
-            try {
-
-                Socket socket = new Socket("localhost", 8080);
-                Remote remote = new Remote(socket);
-                catalogoProxy = (CatalogoProxy) remote.receive();
-                sleepFor(Design.OBTENIENDOCATALOGO);
-                clearConsole();
-                prendioServidor = true;
-                remote.close();
-
-            }
-            catch (IOException e){
-                TiendaFacade.clearConsole();
-                TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                        "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
-                        "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
-                TiendaFacade.clearConsole();
-            }
         }
     }
 
@@ -234,6 +176,7 @@ public class TiendaFacade {
                     break;
                 }
                 case 4:{
+                    tienda.despedirse();
                     return true;
                 }
             }
@@ -242,13 +185,11 @@ public class TiendaFacade {
     }
 
 
-    public void startStore(){
+    public void iniciarPrograma(){
 
         boolean salirSistema = false;
 
         extraerUsuarios(); // OBTENER USUARIOS
-        // prenderServidorCuentas(); // PRENDER SERVIDOR.
-        prenderServidorCatalogo(); // PRENDER Y OBTENER CATÁLOGO.
         presentation(); // PRESENTACIÓN.
 
 
@@ -256,18 +197,10 @@ public class TiendaFacade {
 
             logIn(); // INICIAR SESIÓN.
             obtenerTienda(); // OBTENER LA CONFIGURACIÓN DE LA TIENDA.
+            // tienda.mostrarOferta(); // MOSTRAR OFERTA.
             System.out.print(tienda.saludar()); // SALUDAR.
             salirSistema = menuPrincipal(); // ESTAR EN EL MENÚ PRINCIPAL.
         }
-
-        // ENVIAR OFERTAS.
-
-    }
-
-    public void closeStore(){
-
-        // CERRAR SESIÓN.
-        tienda.despedirse(); // DESPEDIRSE.
     }
 
 }

@@ -1,12 +1,10 @@
 package Others;
 
 
+import Productos.Producto;
+
 public interface Descuento {
 
-    // STRATEGY
-
-    String mostrarDescuento();
-
-    void hacerDescuento();
+    void hacerDescuento(Producto producto);
 
 }

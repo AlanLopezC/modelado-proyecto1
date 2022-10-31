@@ -2,7 +2,7 @@ package Tienda;
 
 import Carrito.Carrito;
 import Catalogo.CatalogoProxy;
-import Cuenta.CuentaProxy;
+import Productos.Producto;
 import Remote.Remote;
 import TiendaFacade.TiendaFacade;
 import Users.User;
@@ -48,5 +48,6 @@ public interface Tienda {
 
     void salirCerrarSesion(User user);
 
-    void mostrarOferta(CatalogoProxy catalogoProxy);
+    void mostrarOferta();
+
 }

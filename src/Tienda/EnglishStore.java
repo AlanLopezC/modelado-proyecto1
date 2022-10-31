@@ -3,17 +3,14 @@ package Tienda;
 import Carrito.Carrito;
 import Carrito.CarritoBuilder;
 import Catalogo.CatalogoProxy;
-import Catalogo.Productos;
 import Cuenta.CuentaProxy;
 import Productos.Producto;
 import Remote.Remote;
-import TiendaFacade.Design;
 import TiendaFacade.TiendaFacade;
 import Users.User;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -47,9 +44,6 @@ public class EnglishStore implements Tienda {
     @Override
     public void realizarCompra(User user){
 
-    }
-    /*public void realizarCompra(CatalogoProxy catalogoProxyIn, User user) {
-
         // OBJETOS
         CarritoBuilder carritoBuilder = new CarritoBuilder();
         Scanner scannerString = new Scanner(System.in);
@@ -70,19 +64,54 @@ public class EnglishStore implements Tienda {
             input = scannerString.nextLine().strip();
 
             switch (input) {
-                case "c": System.out.print("Canceled Purchase.");
+                case "c": {
+                    TiendaFacade.clearConsole();
+                    TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                            "\u2502      Purchase cancelled.        \u2502\n" +
+                            "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                    TiendaFacade.clearConsole();
                     return;
-                case "f": compraSegura(carritoBuilder.build(), user);
+                }
+                case "f": compraSegura(carritoBuilder.build(), user); return;
                 default:
-                    Producto producto = (Producto) catalogoProxyIn.getProducto(input);
-                    if (producto == null){
-                        System.out.print("This product does not exist.");
-                        continue;
+
+                    try {
+
+                        Socket socket = new Socket("localhost", 8080);
+                        Remote remote = new Remote(socket);
+                        CatalogoProxy catalogoProxy = (CatalogoProxy) remote.receive();
+
+                        Producto producto = (Producto) catalogoProxy.getProducto(input);
+                        if (producto == null){
+                            TiendaFacade.clearConsole();
+                            TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                    "\u2502    The product does not exist.    \u2502\n" +
+                                    "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                            TiendaFacade.clearConsole();
+                            remote.close();
+                            continue;
+                        }
+                        TiendaFacade.clearConsole();
+                        TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                                "   You have added the " + producto.getNombre()  + " product to your cart "  +
+                                "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                        TiendaFacade.clearConsole();
+                        carritoBuilder.addProduct(producto);
+
+
+                        remote.close();
+
+                    }catch (IOException e){
+                        TiendaFacade.clearConsole();
+                        TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                "\u2502      SERVER DOWN OR NOT INITIALIZED.  \u2502\n" +
+                                "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+                        TiendaFacade.clearConsole();
                     }
-                    carritoBuilder.addProduct(producto);
+
             }
         }
-    }*/
+    }
 
     @Override
     public void compraSegura(Carrito carritoIn, User user){
@@ -97,33 +126,88 @@ public class EnglishStore implements Tienda {
 
             CuentaProxy cuentaBancariaProxy = (CuentaProxy) remote.receive();
 
-            System.out.println("***Getting account ...***");
+            TiendaFacade.clearConsole();
+            System.out.print("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                    "\u2502     STARTING SECURE PURCHASE.    \u2502\n" +
+                    "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
 
-            System.out.print("Enter your bank accout: ");
+            System.out.print("Enter your bank account: ");
             String cuentaBancaria = scanner.nextLine().strip();
+
+            // NO COINCIDE.
             if (!cuentaBancaria.equals(user.getBankAccount())){
-                System.out.print("Account number does not match.");
-                return;
-            }
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502     THE ACCOUNT NUMBER DOES NOT MATCH.     \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
 
-
-            Double cargo = cuentaBancariaProxy.retirar(carritoIn.costoTotal());
-
-            if (cargo == 0){
-                System.out.print("Canceled Purchase.");
+                remote.send(cuentaBancariaProxy);
                 remote.close();
                 return;
             }
 
-            System.out.print("\nYour cart:\n" + carritoIn.obtenerCarrito());
-            System.out.print("The purchase will arrive on 10/30/2022");
-            remote.send(cuentaBancariaProxy);
+            // RETIRANDO FONDOS.
+            Double cargo = cuentaBancariaProxy.retirar(carritoIn.costoTotal());
+
+            if (carritoIn.costoTotal() == 0){
+
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                        "         You have nothing in your cart. Retry :( " +
+                        "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502      PURCHASE CANCELLED.         \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+
+                remote.send(cuentaBancariaProxy);
+                remote.close();
+                return;
+
+            }
+
+            if (cargo == 0){
+
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                        "         You do not have enough money :( " +
+                        "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+                TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                        "\u2502      PURCHASE CANCELLED.        \u2502\n" +
+                        "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                TiendaFacade.clearConsole();
+
+                remote.send(cuentaBancariaProxy);
+                remote.close();
+                return;
+            }
+
+            System.out.print("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                    "\u2502      PURCHASE ACCEPTED.           \u2502\n" +
+                    "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+            System.out.print(   "\n----------------------------------------".replace('-', '\u2500') + "\n" +
+                    "   YOUR CART: " +
+                    "\n----------------------------------------".replace('-', '\u2500') + "\n");
+            System.out.print(carritoIn.obtenerCarrito());
+            System.out.print(   "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                    "       The purchase will arrive on 10/30/2022"  +
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+            TiendaFacade.sleepFor("");
+            TiendaFacade.clearConsole();
+
+            remote.send(cuentaBancariaProxy); // ACTUALIZANDO LA CUENTA BANCARIA.
             remote.close();
         }
         catch (IOException e){
-            System.out.print(e);
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                    "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                    "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
         }
-
     }
 
     @Override
@@ -137,19 +221,49 @@ public class EnglishStore implements Tienda {
     }
 
     @Override
-    public void mostrarOferta(CatalogoProxy catalogoProxyIn){
+    public void mostrarOferta(){
 
-        ArrayList<Productos> departamentoElectronica = catalogoProxyIn.getProducto("Electronica").getProductos();
-        Random random = new Random();
+        try {
 
-        int index = random.nextInt(departamentoElectronica.size());
-        Producto producto = (Producto) departamentoElectronica.get(index);
-        producto.hacerDescuento();
+            // OBJETOS.
+            String[] barCodes = {"3425","7486", "4633"};
+            Random random = new Random();
+
+            String barcode = barCodes[random.nextInt(barCodes.length)];
+
+            Socket socket = new Socket("localhost", 9090);
+            Remote remote = new Remote(socket);
+
+            remote.send(barcode); // El BARCODE.
+            remote.send(0.40); // DESCUENTO.
+
+
+            CatalogoProxy catalogoProxy = (CatalogoProxy) remote.receive();
 
 
 
-        System.out.print("The system has found an offer.");
-        System.out.print(producto);
+            Producto producto = (Producto) catalogoProxy.getProducto(barcode);
 
+            // HACER DESCUENTO Y MOSTRAR DESCUENTO.
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                    "     There is a 40% discount on the " + producto.getNombre() + " product.\n" +
+                    "     Its current price is " + producto.getPrecio() + " and with the discount it is " + (producto.getPrecio() - (producto.getPrecio() * 0.40)) +
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
+
+            catalogoProxy.hacerDescuento(barcode, 0.40); // ACTUALIZAR CATÁLOGO.
+            remote.send(catalogoProxy);
+            remote.close();
+
+        }catch (IOException e){
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                        "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                                        "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
+        }
     }
+
+
 }
