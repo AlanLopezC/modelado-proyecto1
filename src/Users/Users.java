@@ -33,4 +33,8 @@ public class Users {
                 "ES"));
     }
 
+    public ArrayList<User> getUsers(){
+        return users;
+    }
+
 }

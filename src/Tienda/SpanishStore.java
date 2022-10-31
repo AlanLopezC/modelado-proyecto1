@@ -6,6 +6,7 @@ import Catalogo.CatalogoProxy;
 import Cuenta.CuentaProxy;
 import Productos.Producto;
 import Remote.Remote;
+import TiendaFacade.TiendaFacade;
 import Users.User;
 
 import java.io.IOException;
@@ -16,27 +17,27 @@ public class SpanishStore implements Tienda {
 
     @Override
     public String saludar() {
-        return "\n\u250c-----------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+        return "\n\u250c------------------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
                 "\u2502  ¡Bienvenido a Vuestra Tienda Virtal CheemsMart!. 🏪 \u2502\n" +
-                "\u2514-----------------------------------------------\u2518".replace('-', '\u2500') + "\n";
+                "\u2514------------------------------------------------------\u2518".replace('-', '\u2500') + "\n";
     }
 
     @Override
     public String despedirse() {
-        return "\n\u250c--------------------------------------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+        return "\n\u250c-------------------------------------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
                 "\u2502  Os agradezco por venid a vuestra Tienda Virtual CheemsMart. Volved Pronto 👋 \u2502\n" +
-                "\u2514--------------------------------------------------------------------------\u2518".replace('-', '\u2500') + "\n";
+                "\u2514------------------------------------------------------------------------\u2518".replace('-', '\u2500') + "\n";
     }
 
     @Override
     public String mostrarMenu() {
         return "\n\u250c---------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                "\u2502 1.- Visualizad el Catálogo.                \u2502\n" +
-                "\u2502 2.- Haced una compra.            \u2502\n" +
-                "\u2502 3.- Cerrad vuestra cuenta.                   \u2502\n" +
-                "\u2502 4.- Salid del Sistema.      \u2502\n" +
+                "\u2502 1.- Visualizad el Catálogo.     \u2502\n" +
+                "\u2502 2.- Haced una compra.           \u2502\n" +
+                "\u2502 3.- Cerrad vuestra cuenta.      \u2502\n" +
+                "\u2502 4.- Salid del Sistema.          \u2502\n" +
                 "\u2514---------------------------------\u2518".replace('-', '\u2500') + "\n"
-                + "\nChoice: ";
+                + "\nElección: ";
     }
 
     @Override
@@ -52,7 +53,11 @@ public class SpanishStore implements Tienda {
 
         while (true) {
 
-            mostrarCatalogo();
+            boolean mostroCatalogo = mostrarCatalogo();
+            if (!mostroCatalogo){
+                break;
+            }
+
             System.out.print("c - Cancelad vuestra Compra.\nf - Terminad vuestra Compra.\n");
             System.out.print("Poned el barcode del producto que queréis o la letra que queréis: ");
             input = scannerString.nextLine().strip();
@@ -117,14 +122,14 @@ public class SpanishStore implements Tienda {
 
     @Override
     public void salirCerrarSesion(User user) {
+        TiendaFacade.clearConsole();
+        TiendaFacade.sleepFor("\n\u250c-----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                    "\u2502     CERRANDO VUESTRA SESIÓN       \u2502\n" +
+                                    "\u2514-----------------------------------\u2518".replace('-', '\u2500') + "\n");
         System.out.print("\nCerrando Sesión.\n");
+        TiendaFacade.clearConsole();
         user = null;
 
-    }
-
-    @Override
-    public String salirSistema() {
-        return "Saliendo de vuestro sistema.";
     }
 
     @Override

@@ -5,19 +5,15 @@ import Tienda.Tienda;
 import Tienda.LatinSpanishStore;
 import Tienda.EnglishStore;
 import Tienda.SpanishStore;
-import com.google.gson.Gson;
+import Users.Users;
 import Catalogo.CatalogoProxy;
-import Cuenta.CuentaProxy;
 import Remote.Remote;
 import Users.User;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class TiendaFacade {
@@ -32,7 +28,7 @@ public class TiendaFacade {
 
     public static void clearConsole(){
         try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (InterruptedException | IOException e){
             throw new RuntimeException(e);
         }
@@ -80,26 +76,9 @@ public class TiendaFacade {
     public void extraerUsuarios(){
 
         // OBJETOS
-        StringBuilder json = new StringBuilder();
-        Gson gson = new Gson();
 
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("src/Users/users.json"));
-
-            String linea;
-            while ((linea = bufferedReader.readLine()) != null){
-                json.append(linea);
-            }
-
-            bufferedReader.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        final User[] users = gson.fromJson(String.valueOf(json), User[].class);
-
-        for (User user: users){
+        Users users = new Users();
+        for (User user: users.getUsers()){
             baseDatosUsuarios.put(user.getUsername(), user);
         }
     }
@@ -179,9 +158,6 @@ public class TiendaFacade {
 
     public boolean menuPrincipal(){
 
-
-
-
         // OBJETOS
         Scanner scanner = new Scanner(System.in);
 
@@ -220,7 +196,6 @@ public class TiendaFacade {
                     break;
                 }
                 case 4:{
-                    tienda.salirSistema();
                     return true;
                 }
             }
@@ -234,7 +209,7 @@ public class TiendaFacade {
         boolean salirSistema = false;
 
         extraerUsuarios(); // OBTENER USUARIOS
-        extraerCatalogo(); // OBTENER CATÁLOGO.
+        // extraerCatalogo(); // OBTENER CATÁLOGO.
         presentation(); // PRESENTACIÓN.
 
 
@@ -242,7 +217,7 @@ public class TiendaFacade {
 
             logIn(); // INICIAR SESIÓN.
             obtenerTienda(); // OBTENER LA CONFIGURACIÓN DE LA TIENDA.
-            tienda.saludar(); // SALUDAR.
+            System.out.print(tienda.saludar()); // SALUDAR.
             salirSistema = menuPrincipal(); // ESTAR EN EL MENÚ PRINCIPAL.
         }
 
@@ -254,8 +229,6 @@ public class TiendaFacade {
 
         // CERRAR SESIÓN.
         tienda.despedirse(); // DESPEDIRSE.
-        tienda.salirSistema(); // SALIR DEL SISTEMA.
-
     }
 
 }

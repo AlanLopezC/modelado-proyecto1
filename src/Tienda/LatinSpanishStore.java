@@ -6,6 +6,7 @@ import Catalogo.CatalogoProxy;
 import Cuenta.CuentaProxy;
 import Productos.Producto;
 import Remote.Remote;
+import TiendaFacade.TiendaFacade;
 import Users.User;
 
 import java.io.IOException;
@@ -16,9 +17,9 @@ public class LatinSpanishStore implements Tienda {
 
     @Override
     public String saludar() {
-        return "\n\u250c-----------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+        return "\n\u250c--------------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
                 "\u2502  ¡Bienvenido a la Tienda Virtual CheemsMart!. 🏪 \u2502\n" +
-                "\u2514-----------------------------------------------\u2518".replace('-', '\u2500') + "\n";
+                "\u2514--------------------------------------------------\u2518".replace('-', '\u2500') + "\n";
     }
 
     @Override
@@ -32,9 +33,9 @@ public class LatinSpanishStore implements Tienda {
     public String mostrarMenu() {
         return "\u250c---------------------------------\u2510".replace('-', '\u2500') + "\n" +
                 "\u2502 1.- Ver Catálogo                \u2502\n" +
-                "\u2502 2.- Hacer una compra.            \u2502\n" +
-                "\u2502 3.- Cerrar Sesión.                   \u2502\n" +
-                "\u2502 4.- Salir del Sistema.      \u2502\n" +
+                "\u2502 2.- Hacer una compra.           \u2502\n" +
+                "\u2502 3.- Cerrar Sesión.              \u2502\n" +
+                "\u2502 4.- Salir del Sistema.          \u2502\n" +
                 "\u2514---------------------------------\u2518".replace('-', '\u2500') + "\n"
                 + "\nElección: ";
     }
@@ -52,7 +53,10 @@ public class LatinSpanishStore implements Tienda {
 
         while (true) {
 
-            mostrarCatalogo();
+            boolean mostroCatalogo = mostrarCatalogo();
+            if (!mostroCatalogo){
+                break;
+            }
             System.out.print("c - Cancelar Compra.\nf - Finalizar Compra.\n");
             System.out.print("Escribe el Barcode del Producto que quieres o la letra para elegir la opción: ");
             input = scannerString.nextLine().strip();
@@ -115,15 +119,15 @@ public class LatinSpanishStore implements Tienda {
 
     }
 
-    @Override
-    public void salirCerrarSesion(User user) {
-        System.out.print("\nCerrando Sesión.\n");
-        user = null;
-    }
 
     @Override
-    public String salirSistema() {
-        return "Saliendo del sistema.";
+    public void salirCerrarSesion(User user) {
+        TiendaFacade.clearConsole();
+        TiendaFacade.sleepFor("\n\u250c-----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                    "\u2502           CERRANDO SESIÓN         \u2502\n" +
+                                    "\u2514-----------------------------------\u2518".replace('-', '\u2500') + "\n");
+        TiendaFacade.clearConsole();
+        user = null;
     }
 
     @Override

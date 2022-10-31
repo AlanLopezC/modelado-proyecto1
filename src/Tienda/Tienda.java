@@ -4,6 +4,7 @@ import Carrito.Carrito;
 import Catalogo.CatalogoProxy;
 import Cuenta.CuentaProxy;
 import Remote.Remote;
+import TiendaFacade.TiendaFacade;
 import Users.User;
 
 import java.io.IOException;
@@ -17,7 +18,9 @@ public interface Tienda {
 
     String mostrarMenu();
 
-    default void mostrarCatalogo(){
+    default boolean mostrarCatalogo(){
+
+        boolean mostroCatalogo = false;
 
         try {
 
@@ -27,12 +30,16 @@ public interface Tienda {
             // FALTA PANTALLA DE CARGA.
             catalogoProxy.mostrarCatalogo();
             remote.close();
+            mostroCatalogo = true;
 
         }catch (IOException e){
-            System.out.print("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
                     "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
                     "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
         }
+        return mostroCatalogo;
     }
 
     void realizarCompra(CatalogoProxy catalogoProxyIn, User user);
@@ -40,8 +47,6 @@ public interface Tienda {
     void compraSegura(Carrito carritoIn, User user);
 
     void salirCerrarSesion(User user);
-
-    String salirSistema();
 
     void mostrarOferta(CatalogoProxy catalogoProxy);
 }

@@ -8,6 +8,7 @@ import Cuenta.CuentaProxy;
 import Productos.Producto;
 import Remote.Remote;
 import TiendaFacade.Design;
+import TiendaFacade.TiendaFacade;
 import Users.User;
 
 import java.io.IOException;
@@ -56,7 +57,11 @@ public class EnglishStore implements Tienda {
 
         while (true) {
 
-            mostrarCatalogo();
+            boolean mostroCatalogo = mostrarCatalogo();
+            if (!mostroCatalogo){
+                break;
+            }
+
             System.out.print("c - Cancel Purchase.\nf - Finish Purchase.\n");
             System.out.print("Put the Barcode of the product you want or the letter to choose an option: ");
             input = scannerString.nextLine().strip();
@@ -120,13 +125,12 @@ public class EnglishStore implements Tienda {
 
     @Override
     public void salirCerrarSesion(User user) {
-        System.out.print("\nSign off.\n");
+        TiendaFacade.clearConsole();
+        TiendaFacade.sleepFor("\n\u250c-----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                    "\u2502           SIGN OFF                \u2502\n" +
+                                    "\u2514-----------------------------------\u2518".replace('-', '\u2500') + "\n");
+        TiendaFacade.clearConsole();
         user = null;
-    }
-
-    @Override
-    public String salirSistema() {
-        return "Exiting the system.";
     }
 
     @Override
@@ -136,7 +140,8 @@ public class EnglishStore implements Tienda {
         Random random = new Random();
 
         int index = random.nextInt(departamentoElectronica.size());
-        Productos producto = (Producto) departamentoElectronica.get(index);
+        Producto producto = (Producto) departamentoElectronica.get(index);
+        producto.hacerDescuento();
 
 
 

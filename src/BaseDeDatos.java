@@ -14,8 +14,12 @@ public class BaseDeDatos {
     
     public static void main(String[] args) {
 
-        startServerCuentas();
-        startServerCatalogo();
+        if ("serverCatalogo".equals(args[0])) {
+            startServerCatalogo();
+        }
+        if ("serverCuenta".equals(args[0])){
+            startServerCuentas();
+        }
     }
 
     public static void startServerCatalogo(){
