@@ -42,7 +42,7 @@ public interface Tienda {
         return mostroCatalogo;
     }
 
-    void realizarCompra(CatalogoProxy catalogoProxyIn, User user);
+    void realizarCompra(User user);
 
     void compraSegura(Carrito carritoIn, User user);
 

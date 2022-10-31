@@ -41,7 +41,7 @@ public class LatinSpanishStore implements Tienda {
     }
 
     @Override
-    public void realizarCompra(CatalogoProxy catalogoProxyIn, User user){
+    public void realizarCompra(User user){
 
         // OBJETOS
         CarritoBuilder carritoBuilder = new CarritoBuilder();
@@ -57,21 +57,57 @@ public class LatinSpanishStore implements Tienda {
             if (!mostroCatalogo){
                 break;
             }
+
             System.out.print("c - Cancelar Compra.\nf - Finalizar Compra.\n");
             System.out.print("Escribe el Barcode del Producto que quieres o la letra para elegir la opción: ");
             input = scannerString.nextLine().strip();
 
             switch (input) {
-                case "c": System.out.print("Cancelar Compra");
+                case "c": {
+                    TiendaFacade.clearConsole();
+                    TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                                "\u2502      COMPRA CANCELADA.           \u2502\n" +
+                                                "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                    TiendaFacade.clearConsole();
                     return;
+                }
                 case "f": compraSegura(carritoBuilder.build(), user);
+                break;
                 default:
-                    Producto producto = (Producto) catalogoProxyIn.getProducto(input);
-                    if (producto == null){
-                        System.out.print("Este producto no existe");
-                        continue;
+
+                    try {
+
+                        Socket socket = new Socket("localhost", 8080);
+                        Remote remote = new Remote(socket);
+                        CatalogoProxy catalogoProxy = (CatalogoProxy) remote.receive();
+
+                        Producto producto = (Producto) catalogoProxy.getProducto(input);
+                        if (producto == null){
+                            TiendaFacade.clearConsole();
+                            TiendaFacade.sleepFor("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                    "\u2502        El Producto No Existe.    \u2502\n" +
+                                    "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
+                            TiendaFacade.clearConsole();
+                            continue;
+                        }
+                        TiendaFacade.clearConsole();
+                        TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                                "   Haz agregado a tu carrito el producto "   + producto.getNombre() +
+                                "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                        TiendaFacade.clearConsole();
+                        carritoBuilder.addProduct(producto);
+
+
+                        remote.close();
+
+                    }catch (IOException e){
+                        TiendaFacade.clearConsole();
+                        TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                                "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                                "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+                        TiendaFacade.clearConsole();
                     }
-                    carritoBuilder.addProduct(producto);
+
             }
         }
 
@@ -134,4 +170,6 @@ public class LatinSpanishStore implements Tienda {
     public void mostrarOferta(CatalogoProxy catalogoProxy){
 
     }
+
+
 }

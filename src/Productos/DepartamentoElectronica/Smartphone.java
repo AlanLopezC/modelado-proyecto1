@@ -1,4 +1,6 @@
-package Productos;
+package Productos.DepartamentoElectronica;
+import Productos.Producto;
+
 import java.io.Serializable;
 
 public class Smartphone extends Producto implements Serializable {

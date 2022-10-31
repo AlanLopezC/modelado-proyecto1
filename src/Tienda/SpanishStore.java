@@ -41,7 +41,10 @@ public class SpanishStore implements Tienda {
     }
 
     @Override
-    public void realizarCompra(CatalogoProxy catalogoProxyIn, User user){
+    public void realizarCompra(User user){
+
+    }
+    /*public void realizarCompra(CatalogoProxy catalogoProxyIn, User user){
 
         // OBJETOS
         CarritoBuilder carritoBuilder = new CarritoBuilder();
@@ -76,7 +79,7 @@ public class SpanishStore implements Tienda {
             }
         }
 
-    }
+    }*/
 
     @Override
     public void compraSegura(Carrito carritoIn, User user){

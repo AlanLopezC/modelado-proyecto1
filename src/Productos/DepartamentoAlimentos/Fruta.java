@@ -1,4 +1,6 @@
-package Productos;
+package Productos.DepartamentoAlimentos;
+import Productos.Producto;
+
 import java.io.Serializable;
 
 public class Fruta extends Producto implements Serializable{

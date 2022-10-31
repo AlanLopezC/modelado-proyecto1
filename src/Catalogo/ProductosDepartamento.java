@@ -1,4 +1,5 @@
 package Catalogo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -6,7 +7,7 @@ import java.util.Iterator;
 * Clase que simula el comportamiento de un departamento de productos. 
 **/
 
-public class ProductosDepartamento extends Productos{
+public class ProductosDepartamento extends Productos implements Serializable {
     /*
     * Lista de productos del departamento.
     */
@@ -65,8 +66,9 @@ public class ProductosDepartamento extends Productos{
     **/
     @Override
     public void printDatos(){
-        System.out.println("\n"+ this.getNombre());
-        System.out.println("-----------------------------");
+        System.out.print("\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n");
+        System.out.print("     " + this.getNombre());
+        System.out.print("\n\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n");
             Iterator<Productos> it = productos.iterator();
             while(it.hasNext()){
                 Productos producto = (Productos)it.next();

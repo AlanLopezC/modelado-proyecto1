@@ -65,7 +65,7 @@ public abstract class Producto extends Productos implements Descuento, Serializa
         StringBuilder propiedadesTexto = new StringBuilder();
 
         for (String propiedad : propiedades.keySet()) {
-            propiedadesTexto.append("\n").append(propiedad).append(" : ").append(propiedades.get(propiedad));
+            propiedadesTexto.append("\n").append(propiedad).append(" -> ").append(propiedades.get(propiedad));
         }
         return propiedadesTexto.toString();
     }
@@ -88,12 +88,19 @@ public abstract class Producto extends Productos implements Descuento, Serializa
     // TO STRING
     @Override
     public String toString() {
-        return nombre + " : $" + precio + "- BarCode: " + barcode + "\n\nDescripción:\n" + description + "\n\nPropiedades:" + getPropiedades();
+        return "Nombre: " + nombre + "\n" +
+                "Precio: " + precio + "\n" +
+                "BarCode: " + barcode + "\n" +
+                "\n\nDescripción:\n" + description +
+                "\n\nPropiedades:" + getPropiedades();
     }
 
     @Override
     public void printDatos(){
-        System.out.println("\n"+this.toString());
+        System.out.print("\n-----------".replace('-', '\u2500') + "\n" +
+                            this +
+                        "\n-----------".replace('-', '\u2500') + "\n"
+        );
     }
     
     public Iterator crearIterador(){

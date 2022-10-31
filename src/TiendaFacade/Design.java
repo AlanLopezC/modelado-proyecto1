@@ -37,10 +37,11 @@ public class Design {
                                              "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
 
     final static String OBTENIENDOCATALOGO = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                             "\u2502              OBTENIENDO CATALOGO.              \u2502\n" +
+                                             "\u2502      OBTENIENDO CATALOGO.        \u2502\n" +
                                              "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
 
     final static String OPCIONINVALIDA = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                         "\u2502              OPCIÓN INVALIDA.              \u2502\n" +
+                                         "\u2502          OPCIÓN INVALIDA.        \u2502\n" +
                                          "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
+
 }

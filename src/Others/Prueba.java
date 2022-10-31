@@ -1,7 +1,7 @@
 package Others;
 
-import Productos.Fruta;
-import Productos.Smartphone;
+import Productos.DepartamentoAlimentos.Fruta;
+import Productos.DepartamentoElectronica.Smartphone;
 import Catalogo.*;
 
 public class Prueba {

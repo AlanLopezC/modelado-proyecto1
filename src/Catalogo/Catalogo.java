@@ -1,5 +1,9 @@
 package Catalogo;
 import Productos.*;
+import Productos.DepartamentoAlimentos.Fruta;
+import Productos.DepartamentoElectrodomesticos.Lavadora;
+import Productos.DepartamentoElectronica.Smartphone;
+
 import java.util.*;
 import java.io.Serializable;
 /**
@@ -14,54 +18,94 @@ public class Catalogo implements Serializable, CatalogoServer{
     * Constructor de la clase.
     **/
     public Catalogo(){
-        Producto iPhone = new Smartphone("Iphone 3", "12345", "Celulares", 7999.00,
-                "- El producto tendrá una batería que supere el 80 % de capacidad en comparación con uno totalmente nuevo.\n"
-                        +
-                        "- Es posible que los accesorios que vengan con el producto no sean originales, pero serán compatibles y totalmente funcionales.\n"
-                        +
-                        "- Es posible que el producto venga en una caja genérica y no en la caja original.\n" +
-                        "- 64GB\n" +
-                        "- 4GB memoria RAM\n" +
-                        "- Reacondicionado Tipo A\n" +
-                        "- Caja Genérica\n" +
-                        "- Producto Reacondicionado (Por manejo e importación puede presentar detalles estéticos que no afecten el funcionamiento");
 
-        iPhone.agregarPropiedad("Color", "Negro");
-        iPhone.agregarPropiedad("Procesador", "A15");
-        iPhone.agregarPropiedad("Seguridad", "Face ID");
 
-        Producto samsung = new Smartphone("Samsung", "4353", "Electronica", 1000.00,
-                "- El producto está reacondicionado, es totalmente funcional y está en excelentes condiciones. Respaldado por la garantía de 90 días de Amazon Renewed.\n"
-                        +
-                        "- Los proveedores cualificados de Amazon han inspeccionado, probado y limpiado profesionalmente este producto usado.\n"
-                        +
-                        "- Este producto está en \"Condición excelente\". No muestra signos de daños cosméticos visibles desde una distancia de 30 centímetros.\n"
-                        +
-                        "- Los productos con baterías superarán el 80 % de capacidad en comparación con uno nuevo. Es posible que los accesorios no sean originales, pero serán compatibles y totalmente operativos. Es posible que el producto venga en una caja genérica.\n"
-                        +
-                        "- Este producto viene con una garantía de 90 días respaldada por el proveedor.");
-
-        samsung.agregarPropiedad("Color", "Rojo");
-        samsung.agregarPropiedad("Procesador", "Snapdragon");
-        samsung.agregarPropiedad("Seguridad", "Lector de Huellas");
-
-        Producto manzana = new Fruta("Manzana", "1425566", "Alimentos", 10, "- Traído de las granjas.");
+        // DEPARTAMENTO ALIMENTOS.
+        Producto manzana = new Fruta("Manzana", "2345", "Alimentos", 10, "- Traído de las Granjas del Abuelo Toño");
         manzana.agregarPropiedad("Color", "Rojo");
-        manzana.agregarPropiedad("Tiene gusanos", false);
-        
-        ArrayList<Productos> frutas = new ArrayList<Productos>();
-        ArrayList<Productos> smarts = new ArrayList<Productos>();
-        ArrayList<Productos> allDeparments = new ArrayList<Productos>();
+
+        // DEPARTAMENTO ELECTRODOMÉSTICOS
+        Producto lavadoraWhirlpool = new Lavadora("Lavadora Whirlpool", "5345", "Electrodomesticos", 8990, "- 12 Ciclos de lavado, (3 ciclos Xpert: Ropa de Color)" );
+        lavadoraWhirlpool.agregarPropiedad("Peso", 20);
+
+
+        // DEPARTAMENTO ELECTRONICA.
+        Producto iPhone = new Smartphone("Iphone 15", "3425", "Electronica", 7999, "- El producto tendrá una batería que supere el 80% de capacidad en comparación con uno totalmente nuevo.\n"
+                                                                                                                                  + "- Es posible que los accesorios que vengan con el producto no sean originales, pero serán compatibles y totalmente funcionales");
+        iPhone.agregarPropiedad("Color", "Negro");
+
+
+
+
+        // LISTA FRUTAS
+        ArrayList<Productos> frutas = new ArrayList<>();
+
+        // DEPARTAMENTO CARNE
+        ArrayList<Productos> carnes = new ArrayList<>();
+
+        // DEPARTAMENTO LACTEOS
+        ArrayList<Productos> lacteos = new ArrayList<>();
+
+        // LISTA LAVADORAS
+        ArrayList<Productos> lavadoras = new ArrayList<>();
+
+        // DEPARTAMENTO MICROONDAS
+        ArrayList<Productos> microondas = new ArrayList<>();
+
+        // DEPARTAMENTO REFRIGERADOR
+        ArrayList<Productos> refrigeradores = new ArrayList<>();
+
+        // LISTA SMARTPHONES
+        ArrayList<Productos> smartPhones = new ArrayList<>();
+
+        // DEPARTAMENTO LAPTOPS
+        ArrayList<Productos> laptops = new ArrayList<>();
+
+        // DEPARTAMENTO TELEVISIÓN
+        ArrayList<Productos> televisiones = new ArrayList<>();
+
+
+
+        // TODOS LOS DEPARTAMENTOS
+        ArrayList<Productos> allDeparments = new ArrayList<>();
+
+        // DEPARTAMENTO FRUTAS
         Productos departamentoFrutas = new ProductosDepartamento(frutas, "Frutas","1");
-        Productos departamentoSmart = new ProductosDepartamento(smarts, "Tecnología","1");
+
+        // DEPARTAMENTO LAVADORAS
+        Productos departamentoLavadoras = new ProductosDepartamento(lavadoras, "Lavadoras", "1");
+
+        // DEPARTAMENTO SMARTPHONES
+        Productos departamentoSmartPhones = new ProductosDepartamento(smartPhones, "SmartPhones","1");
+
+        // CATÁLOGO
         Productos catalogo = new ProductosDepartamento(allDeparments, "Catálogo","1");
+
+        // AGREGANDO PRODUCTOS A SUS RESPECTIVOS DEPARTAMENTOS
+
+        // AGREGANDO FRUTAS
         departamentoFrutas.add(manzana);
-        departamentoSmart.add(iPhone);
-        departamentoSmart.add(samsung);
+
+        // AGREGANDO SMARTPHONES
+        departamentoSmartPhones.add(iPhone);
+
+        // AGREGANDO LAVADORAS
+        departamentoLavadoras.add(lavadoraWhirlpool);
+
+
+        // AGREGANDO LOS DEPARTAMENTOS A SU CATÁLOGO
+
+        // DEPARTAMENTO FRUTAS
         catalogo.add(departamentoFrutas);
-        catalogo.add(departamentoSmart);
+
+        // DEPARTAMENTO SMARTPHONES
+        catalogo.add(departamentoSmartPhones);
+
+        // DEPARTAMENTO LAVADORAS
+        catalogo.add(departamentoLavadoras);
+
+
         this.catalogo = catalogo;
-        
 
     }
     /*
