@@ -187,6 +187,9 @@ public class TiendaFacade {
 
     public void iniciarPrograma(){
 
+        Random random = new Random();
+        boolean abraDescuento = random.nextBoolean();
+
         boolean salirSistema = false;
 
         extraerUsuarios(); // OBTENER USUARIOS
@@ -197,7 +200,9 @@ public class TiendaFacade {
 
             logIn(); // INICIAR SESIÓN.
             obtenerTienda(); // OBTENER LA CONFIGURACIÓN DE LA TIENDA.
-            // tienda.mostrarOferta(); // MOSTRAR OFERTA.
+            if (abraDescuento){
+                tienda.mostrarOferta(); // MOSTRAR OFERTA.
+            }
             System.out.print(tienda.saludar()); // SALUDAR.
             salirSistema = menuPrincipal(); // ESTAR EN EL MENÚ PRINCIPAL.
         }

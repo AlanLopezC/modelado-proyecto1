@@ -16,6 +16,8 @@ import java.util.Scanner;
 
 public class EnglishStore implements Tienda {
 
+    private String barCodeFinal;
+
     @Override
     public String saludar() {
         return "\n\u250c-----------------------------------------------\u2510".replace('-', '\u2500') + "\n" +
@@ -96,6 +98,9 @@ public class EnglishStore implements Tienda {
                                 "   You have added the " + producto.getNombre()  + " product to your cart "  +
                                 "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
                         TiendaFacade.clearConsole();
+                        if (barCodeFinal != null && producto.getBarcode().equals(barCodeFinal)){
+                            producto.setPrecio(producto.getPrecio() - (producto.getPrecio() * 0.40));
+                        }
                         carritoBuilder.addProduct(producto);
 
 
@@ -227,15 +232,14 @@ public class EnglishStore implements Tienda {
 
             // OBJETOS.
             String[] barCodes = {"3425","7486", "4633"};
+
             Random random = new Random();
 
             String barcode = barCodes[random.nextInt(barCodes.length)];
+            barCodeFinal = barcode;
 
-            Socket socket = new Socket("localhost", 9090);
+            Socket socket = new Socket("localhost", 8080);
             Remote remote = new Remote(socket);
-
-            remote.send(barcode); // El BARCODE.
-            remote.send(0.40); // DESCUENTO.
 
 
             CatalogoProxy catalogoProxy = (CatalogoProxy) remote.receive();
@@ -251,9 +255,6 @@ public class EnglishStore implements Tienda {
                     "     Its current price is " + producto.getPrecio() + " and with the discount it is " + (producto.getPrecio() - (producto.getPrecio() * 0.40)) +
                     "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
             TiendaFacade.clearConsole();
-
-            catalogoProxy.hacerDescuento(barcode, 0.40); // ACTUALIZAR CATÁLOGO.
-            remote.send(catalogoProxy);
             remote.close();
 
         }catch (IOException e){

@@ -11,9 +11,12 @@ import Users.User;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SpanishStore implements Tienda {
+
+    private String barCodeFinal;
 
     @Override
     public String saludar() {
@@ -95,6 +98,9 @@ public class SpanishStore implements Tienda {
                                 "   Haz agregado a tu furgoneta el producto "   + producto.getNombre() +
                                 "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
                         TiendaFacade.clearConsole();
+                        if (barCodeFinal != null && producto.getBarcode().equals(barCodeFinal)){
+                            producto.setPrecio(producto.getPrecio() - (producto.getPrecio() * 0.30));
+                        }
                         carritoBuilder.addProduct(producto);
 
 
@@ -225,7 +231,42 @@ public class SpanishStore implements Tienda {
 
     @Override
     public void mostrarOferta(){
+        try {
 
+            // OBJETOS.
+            String[] barCodes = {"5345","9762", "2843"};
+
+            Random random = new Random();
+
+            String barcode = barCodes[random.nextInt(barCodes.length)];
+            barCodeFinal = barcode;
+
+            Socket socket = new Socket("localhost", 8080);
+            Remote remote = new Remote(socket);
+
+
+            CatalogoProxy catalogoProxy = (CatalogoProxy) remote.receive();
+
+
+
+            Producto producto = (Producto) catalogoProxy.getProducto(barcode);
+
+            // HACER DESCUENTO Y MOSTRAR DESCUENTO.
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
+                    "     Vosotros hemos encontrado un 30% de descuento en el " + producto.getNombre() + "\n" +
+                    "     Su precio actual " + producto.getPrecio() + ", si aplicamos el descuento " + (producto.getPrecio() - (producto.getPrecio() * 0.30)) +
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
+            remote.close();
+
+        }catch (IOException e){
+            TiendaFacade.clearConsole();
+            TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
+                    "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                    "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+            TiendaFacade.clearConsole();
+        }
     }
 
 }
