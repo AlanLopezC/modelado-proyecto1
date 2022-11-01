@@ -28,17 +28,6 @@ public class Design {
             "            |_____|  |_|  |___||___||_|    |_||___|  |_|_|_||___||_|_||___||___|  |__,||___||_|_||_|  |___|  |__|\n" +
             "                                                                                                                s         ";
 
-    final static String OBTENIENDOCUENTA = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                         "\u2502              OBTENIENDO CUENTA.              \u2502\n" +
-                                         "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
-
-    final static String CUENTANOENCONTRADA = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                             "\u2502              CUENTA NO ENCONTRADA.              \u2502\n" +
-                                             "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
-
-    final static String OBTENIENDOCATALOGO = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                             "\u2502      OBTENIENDO CATALOGO.        \u2502\n" +
-                                             "\u2514----------------------------------\u2518".replace('-', '\u2500') + "\n";
 
     final static String OPCIONINVALIDA = "\n\u250c----------------------------------\u2510".replace('-', '\u2500') + "\n" +
                                          "\u2502          OPCIÓN INVALIDA.        \u2502\n" +

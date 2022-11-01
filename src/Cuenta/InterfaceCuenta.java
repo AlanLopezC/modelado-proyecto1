@@ -1,6 +1,6 @@
 package Cuenta;
 /**
-* Clase interface de una cuenta bancaria.
+* Clase interfaz de una cuenta bancaria.
  */
 public interface InterfaceCuenta{
 
@@ -9,11 +9,12 @@ public interface InterfaceCuenta{
     * @param monto monto a retirar.
     * @return double monto retirado. 
      */
-    public double retirar( double monto);
+    double retirar( double monto);
     
     /** 
     Método que simula algún depósito a la cuenta.
     @param monto dinero que se depositará a la cuenta.
     */
-    public void depositar(double monto);
+    void depositar(double monto);
+
 }

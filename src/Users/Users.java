@@ -33,6 +33,10 @@ public class Users {
                 "ES"));
     }
 
+    /**
+     * Método para obtener los usuarios.
+     * @return ArrayList<>User</> - Lista de Usuarios.
+     */
     public ArrayList<User> getUsers(){
         return users;
     }

@@ -15,12 +15,15 @@ import java.util.*;
 
 public class TiendaFacade {
 
-    private Map<String, User> baseDatosUsuarios = new HashMap<>();
+    private Map<String, User> baseDatosUsuarios = new HashMap<>(); // BASE DE DATOS DE USUARIOS.
 
-    private User user;
+    private User user; // USUARIO EN LA TIENDA.
 
-    private Tienda tienda;
+    private Tienda tienda; // TIENDA.
 
+    /**
+     * Método para limpiar la consola.
+     */
     public static void clearConsole(){
         try {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
@@ -29,11 +32,16 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método para "Hacer una pantalla de carga."
+     * @param loadString - Mensaje que estará cargando.
+     */
     public static void load(String loadString){
         for (int i = 0; i < loadString.length(); i++) {
-            System.out.print("\n" + loadString.charAt(i) + "\n");
+            // System.out.print("\n" + loadString.charAt(i) + "\n");
+            System.out.print(loadString.charAt(i));
             try {
-                Thread.sleep(2);
+                Thread.sleep(1000);
             }
             catch (InterruptedException e){
                 throw new RuntimeException();
@@ -41,6 +49,10 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Mëtodo para que se muestre solo por unos segundos un mensaje.
+     * @param sleepIn - Mensaje.
+     */
     public static void sleepFor(String sleepIn){
         try {
             System.out.print(sleepIn);
@@ -51,6 +63,24 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método para que se muestre solo por unos segundos un mensaje.
+     * @param sleepIn - Mensaje.
+     * @param time - Cantidad en milisegundos.
+     */
+    public static void sleepFor(String sleepIn, int time){
+        try {
+            System.out.print(sleepIn);
+            Thread.sleep(time);
+        }
+        catch (InterruptedException e){
+            System.out.print(e);
+        }
+    }
+
+    /**
+     * Presentación del Programa.
+     */
     public void presentation(){
         String[] palabras = {Design.INICIOSPANISH, Design.INICIOENGLISH, Design.INICIOFRANCES};
         for (int i = 0; i < palabras.length; i++){
@@ -68,6 +98,9 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método para extraer usuarios.
+     */
     public void extraerUsuarios(){
 
         // OBJETOS
@@ -78,6 +111,9 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método para entrar a una cuenta de la Tienda.
+     */
     public void logIn(){
 
         // OBJETOS
@@ -124,6 +160,9 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método para obtener la respectiva Tienda dependiendo del país del usuario.
+     */
     public void obtenerTienda(){
         switch (user.getCountry()) {
             case "MX":  tienda = new LatinSpanishStore();
@@ -134,6 +173,10 @@ public class TiendaFacade {
         }
     }
 
+    /**
+     * Método que te maneja y muestra el menú principal de la Tienda.
+     * @return Boolean - True si quieres salir del menú principal, False cualquier otro caso.
+     */
     public boolean menuPrincipal(){
 
         // OBJETOS
@@ -176,7 +219,7 @@ public class TiendaFacade {
                     break;
                 }
                 case 4:{
-                    tienda.despedirse();
+                    System.out.print(tienda.despedirse());
                     return true;
                 }
             }
@@ -185,6 +228,9 @@ public class TiendaFacade {
     }
 
 
+    /**
+     * Método que inicia el programa.
+     */
     public void iniciarPrograma(){
 
         Random random = new Random();

@@ -1,14 +1,14 @@
 package Catalogo;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /*
 Clase que simula un proxy para el catálogo.
 */
 public class CatalogoProxy implements Serializable, CatalogoServer{
     private Catalogo CatalogoReal;
+
     /**
-    * COnstructor de la clase
+    * Constructor de la clase
     **/
     public CatalogoProxy(Catalogo CatalogoReal){
         this.CatalogoReal = CatalogoReal;
@@ -20,15 +20,11 @@ public class CatalogoProxy implements Serializable, CatalogoServer{
         CatalogoReal.mostrarCatalogo();
     }
 
-    @Override
-    public void hacerDescuento(String barcode, double descountIn) {
-        CatalogoReal.hacerDescuento(barcode, descountIn);
-    }
-
-    public void actualizarCatalogo(String barCode, double descountIn){
-        CatalogoReal.hacerDescuento(barCode, descountIn);
-    }
-
+    /**
+     * Método que te devuelve un producto del CatalogoProxy.
+     * @param br - Barcode del Producto.
+     * @return Productos - Producto del Catálogo.
+     */
     public Productos getProducto(String br){
         return CatalogoReal.getProducto(br);
     }

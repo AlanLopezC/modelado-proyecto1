@@ -12,6 +12,10 @@ public class  Carrito {
         this.productos = builder.getProducts();
     }
 
+    /**
+     * Método para obtener el costo total del carrito.
+     * @return Double - Costo Total.
+     */
     public double costoTotal() {
 
         double costo = 0;
@@ -21,6 +25,10 @@ public class  Carrito {
         return costo;
     }
 
+    /**
+     * Método para obtener los productos del carrito.
+     * @return StringBuilder - Productos del Carrito.
+     */
     public StringBuilder obtenerCarrito() {
 
         StringBuilder carrito = new StringBuilder();

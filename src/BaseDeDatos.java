@@ -10,12 +10,14 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+/**
+ * Clase que genera Base de Datos.
+ */
 public class BaseDeDatos {
 
     private static Catalogo catalogoEnviar = new Catalogo();
     
     public static void main(String[] args) {
-
         if ("catalogo".equals(args[0])) {
             startServerCatalogo();
         }
@@ -24,6 +26,9 @@ public class BaseDeDatos {
         }
     }
 
+    /**
+     * Método para iniciar el servidor del catálogo.
+     */
     public static void startServerCatalogo(){
 
         System.out.println("***SERVIDOR DEL CATALOGO***");
@@ -47,6 +52,9 @@ public class BaseDeDatos {
         }
     }
 
+    /**
+     * Método para iniciar el servidor de las cuentas bancarias.
+     */
     public static void startServerCuentas(){
         System.out.println("***Servidor del VVBA***");
         try{

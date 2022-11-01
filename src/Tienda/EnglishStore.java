@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class EnglishStore implements Tienda {
 
-    private String barCodeFinal;
+    private String barCodeFinal; // BARCODE DEL PRODUCTO CON DESCUENTO.
 
     @Override
     public String saludar() {
@@ -200,7 +200,7 @@ public class EnglishStore implements Tienda {
             System.out.print(   "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                     "       The purchase will arrive on 10/30/2022"  +
                     "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
-            TiendaFacade.sleepFor("");
+            TiendaFacade.sleepFor("", 10000);
             TiendaFacade.clearConsole();
 
             remote.send(cuentaBancariaProxy); // ACTUALIZANDO LA CUENTA BANCARIA.
@@ -209,7 +209,7 @@ public class EnglishStore implements Tienda {
         catch (IOException e){
             TiendaFacade.clearConsole();
             TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                    "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
+                    "\u2502      SERVER DOWN OR NOT INITIALIZED.  \u2502\n" +
                     "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
             TiendaFacade.clearConsole();
         }
@@ -253,18 +253,17 @@ public class EnglishStore implements Tienda {
             TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                     "     There is a 40% discount on the " + producto.getNombre() + " product.\n" +
                     "     Its current price is " + producto.getPrecio() + " and with the discount it is " + (producto.getPrecio() - (producto.getPrecio() * 0.40)) +
-                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n", 10000);
             TiendaFacade.clearConsole();
             remote.close();
 
         }catch (IOException e){
             TiendaFacade.clearConsole();
             TiendaFacade.sleepFor("\n\u250c-----------------------------------------\u2510".replace('-', '\u2500') + "\n" +
-                                        "\u2502      SERVIDOR CAIDO O NO INICIALIZADO.  \u2502\n" +
-                                        "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
+                    "\u2502      SERVER DOWN OR NOT INITIALIZED.  \u2502\n" +
+                    "\u2514-----------------------------------------\u2518".replace('-', '\u2500') + "\n");
             TiendaFacade.clearConsole();
         }
     }
-
 
 }

@@ -201,7 +201,7 @@ public class SpanishStore implements Tienda {
             System.out.print(   "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                     "       Vuestra compra llegará el 10/30/2022"  +
                     "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
-            TiendaFacade.sleepFor("");
+            TiendaFacade.sleepFor("",10000);
             TiendaFacade.clearConsole();
 
             remote.send(cuentaBancariaProxy); // ACTUALIZANDO LA CUENTA BANCARIA.
@@ -256,7 +256,7 @@ public class SpanishStore implements Tienda {
             TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                     "     Vosotros hemos encontrado un 30% de descuento en el " + producto.getNombre() + "\n" +
                     "     Su precio actual " + producto.getPrecio() + ", si aplicamos el descuento " + (producto.getPrecio() - (producto.getPrecio() * 0.30)) +
-                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n", 10000);
             TiendaFacade.clearConsole();
             remote.close();
 

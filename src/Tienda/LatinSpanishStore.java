@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class LatinSpanishStore implements Tienda {
 
-    private String barCodeFinal;
+    private String barCodeFinal; // BARCODE DEL PRODUCTO CON DESCUENTO.
 
     @Override
     public String saludar() {
@@ -201,7 +201,7 @@ public class LatinSpanishStore implements Tienda {
             System.out.print(   "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                                 "       La compra llegará el 10/30/2022"  +
                                 "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
-            TiendaFacade.sleepFor("");
+            TiendaFacade.sleepFor("",10000);
             TiendaFacade.clearConsole();
 
             remote.send(cuentaBancariaProxy); // ACTUALIZANDO LA CUENTA BANCARIA.
@@ -215,7 +215,6 @@ public class LatinSpanishStore implements Tienda {
             TiendaFacade.clearConsole();
         }
     }
-
 
     @Override
     public void salirCerrarSesion(User user) {
@@ -255,7 +254,7 @@ public class LatinSpanishStore implements Tienda {
             TiendaFacade.sleepFor("\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n" +
                     "     Hay un descuento del 20% en el producto " + producto.getNombre() + "\n" +
                     "     Su actual precio es de " + producto.getPrecio() + " y con el descuento será " + (producto.getPrecio() - (producto.getPrecio() * 0.20)) +
-                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n");
+                    "\n--------------------------------------------------------------------".replace('-', '\u2500') + "\n", 10000);
             TiendaFacade.clearConsole();
             remote.close();
 

@@ -10,17 +10,22 @@ import Productos.DepartamentoElectronica.Laptop;
 import Productos.DepartamentoElectronica.Smartphone;
 import Productos.DepartamentoElectronica.Television;
 
-import java.net.ProxySelector;
+
 import java.util.*;
 import java.io.Serializable;
+
+
 /**
 * Clase que simula el catálogo de la tienda virtual.
  **/
 public class Catalogo implements Serializable, CatalogoServer{
+
+
     /*
     atributo en el cual se agregará el catálogo con los departamentos y sus correspondientes artículos.
     */
     private Productos catalogo;
+
     /** 
     * Constructor de la clase.
     **/
@@ -241,6 +246,8 @@ public class Catalogo implements Serializable, CatalogoServer{
         this.catalogo = catalogo;
 
     }
+
+
     /*
     * Método que imprime el catálogo. 
     */
@@ -248,17 +255,6 @@ public class Catalogo implements Serializable, CatalogoServer{
         catalogo.printDatos(); 
     }
 
-    @Override
-    public void hacerDescuento(String barcode, double descountIn) {
-        Iterator it = catalogo.crearIterador();
-        while(it.hasNext()){
-            Productos producto = (Productos)it.next();
-            if(producto.getBarcode().equals(barcode)){
-                Producto productoConDescuento = (Producto) producto;
-                productoConDescuento.setPrecio(productoConDescuento.getPrecio() - (((Producto) producto).getPrecio() * descountIn));
-            }
-        }
-    }
 
     /**
     * Método que devuelve un producto dado un código de barras.
@@ -275,16 +271,6 @@ public class Catalogo implements Serializable, CatalogoServer{
         }
         return null;
     }
-
-
-    public static void main(String[] args){
-        Catalogo catprueba = new Catalogo();
-
-        //catprueba.mostrarCatalogo();
-        System.out.println(catprueba.getProducto("1.1"));
-    }
-
-
    
 }
  

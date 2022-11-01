@@ -12,12 +12,28 @@ import java.net.Socket;
 
 public interface Tienda {
 
+    /**
+     * La tienda saluda al usuario en su respectivo Idioma.
+     * @return String - Saludo.
+     */
     String saludar();
 
+    /**
+     * La tienda se despide del usuario en su respectivo Idioma.
+     * @return String - Despedida.
+     */
     String despedirse();
 
+    /**
+     * Método que te muestra el menú en su respectivo Idioma.
+     * @return String - Menú.
+     */
     String mostrarMenu();
 
+    /**
+     * Método que muestra el catálogo.
+     * @return Boolean - True si mostro el catálogo.
+     */
     default boolean mostrarCatalogo(){
 
         boolean mostroCatalogo = false;
@@ -42,12 +58,28 @@ public interface Tienda {
         return mostroCatalogo;
     }
 
+    /**
+     * Método para realizar una compra en la Tienda con el respectivo Idioma del Usuario.
+     * @param user - User que hará la compra.
+     */
     void realizarCompra(User user);
 
+    /**
+     * Método para realizar una compra segura en la Tienda.
+     * @param carritoIn - Carrito que contiene los Productos Elegidos por el usuario.
+     * @param user - Usuario que va a realizar la compra Segura.
+     */
     void compraSegura(Carrito carritoIn, User user);
 
+    /**
+     * Método para cerrar Sesión del Usuario.
+     * @param user - Usuario que va a cerrar sesión.
+     */
     void salirCerrarSesion(User user);
 
+    /**
+     * Método para mostrar una oferta disponible respectivo al país del Usuario.
+     */
     void mostrarOferta();
 
 }

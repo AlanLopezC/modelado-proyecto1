@@ -57,7 +57,7 @@ public class Remote<T extends Serializable> {
     	T value = null;
     	//synchronized(receiving){
 	    	try{
-	    		//Se interpreta el objeto que se leera en el ObjectInputStream in.
+	    		//Se interpreta el objeto que se leer en el ObjectInputStream in.
 	    		value = (T) in.readObject();
 	    	} catch (ClassNotFoundException e){
 	    		e.printStackTrace();
@@ -70,7 +70,7 @@ public class Remote<T extends Serializable> {
     }
 
     /*
-    * Metodo que cierra la comunicacion. Se cierra el socket 
+    * Metodo que cierra la communication. Se cierra el socket
     * y los ObjectOutputStream y ObjectInputStream.
     */
     public void close() throws IOException {
